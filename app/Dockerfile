@@ -1,16 +1,12 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-WORKDIR /app
+FROM ubuntu:18.04
+MAINTAINER Demo example@demo.com
 
-# Copy csproj and restore as distinct layers
-COPY SampleWebApp/*.csproj .
-RUN dotnet restore
+# Avoiding user interaction
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Copy everything else and build website
-COPY SampleWebApp/. .
-RUN dotnet publish -c release -o /WebApp --no-restore
+RUN apt-get update -y
+RUN apt-get install -y apache2 # install Apache web server (Only 'yes')
 
-# Final stage / image
-FROM mcr.microsoft.com/dotnet/aspnet:5.0
-WORKDIR /WebApp
-COPY --from=build /WebApp ./
-ENTRYPOINT ["dotnet", "SampleWebApp.dll"]
+EXPOSE 80
+
+CMD ["apachectl", "-D", "FOREGROUND"]

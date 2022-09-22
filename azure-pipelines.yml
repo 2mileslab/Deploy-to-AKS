@@ -29,7 +29,7 @@ stages:
           lateste
     - task: PublishPipelineArtifact@1
       inputs:
-        targetPath: '$(Pipeline.Workspace)/s/kubernetes'
+        targetPath: '$(Pipeline.Workspace)/kubernetes'
         artifact: 'manifests'
         publishLocation: 'pipeline'
 - stage: Deploy
@@ -62,5 +62,5 @@ stages:
         kubernetesServiceConnection: 'K8s-default'
         namespace: 'default'
         manifests:
-          $(Pipeline.Workspace)/manifests/s/deployment.yml
-          $(Pipeline.Workspace)/manifests/s/service.yml
+          $(Pipeline.Workspace)/manifests/deployment.yml
+          $(Pipeline.Workspace)/manifests/service.yml

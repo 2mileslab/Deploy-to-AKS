@@ -26,12 +26,13 @@ stages:
         Dockerfile: '$(Build.SourcesDirectory)/app/Dockerfile'
         tags: |
           $(tag)
-          lateste
+          latest
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: '$(Pipeline.Workspace)/s/kubernetes'
         artifact: 'manifests'
         publishLocation: 'pipeline'
+        
 - stage: Deploy
   displayName: Deploy to Dev
   dependsOn: Build
